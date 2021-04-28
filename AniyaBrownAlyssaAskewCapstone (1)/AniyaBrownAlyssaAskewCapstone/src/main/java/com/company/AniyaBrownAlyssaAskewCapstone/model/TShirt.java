@@ -3,18 +3,18 @@ package com.company.AniyaBrownAlyssaAskewCapstone.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Game {
+public class TShirt {
 
     //properties
     private int id;
-    private String title;
-    private String esrb_rating;
+    private String size;
+    private String color;
     private String description;
     private BigDecimal price;
-    private String studio;
     private int quantity;
 
     //getters and setters
+
     public int getId() {
         return id;
     }
@@ -23,20 +23,20 @@ public class Game {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSize() {
+        return size;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    public String getEsrb_rating() {
-        return esrb_rating;
+    public String getColor() {
+        return color;
     }
 
-    public void setEsrb_rating(String esrb_rating) {
-        this.esrb_rating = esrb_rating;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getDescription() {
@@ -55,14 +55,6 @@ public class Game {
         this.price = price;
     }
 
-    public String getStudio() {
-        return studio;
-    }
-
-    public void setStudio(String studio) {
-        this.studio = studio;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -77,12 +69,12 @@ public class Game {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Game game = (Game) o;
-        return getId() == game.getId() && getQuantity() == game.getQuantity() && Objects.equals(getTitle(), game.getTitle()) && Objects.equals(getEsrb_rating(), game.getEsrb_rating()) && Objects.equals(getDescription(), game.getDescription()) && Objects.equals(getPrice(), game.getPrice()) && Objects.equals(getStudio(), game.getStudio());
+        TShirt tShirt = (TShirt) o;
+        return getId() == tShirt.getId() && getQuantity() == tShirt.getQuantity() && Objects.equals(getSize(), tShirt.getSize()) && Objects.equals(getColor(), tShirt.getColor()) && Objects.equals(getDescription(), tShirt.getDescription()) && Objects.equals(getPrice(), tShirt.getPrice());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getEsrb_rating(), getDescription(), getPrice(), getStudio(), getQuantity());
+        return Objects.hash(getId(), getSize(), getColor(), getDescription(), getPrice(), getQuantity());
     }
 }
