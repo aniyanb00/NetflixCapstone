@@ -1,6 +1,8 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.dao;
 import com.company.AniyaBrownAlyssaAskewCapstone.model.Invoice;
 import java.util.List;
+
+
 public interface InvoiceDao {
     Invoice addInvoice (Invoice invoice);
     Invoice getInvoice (int invoiceId);

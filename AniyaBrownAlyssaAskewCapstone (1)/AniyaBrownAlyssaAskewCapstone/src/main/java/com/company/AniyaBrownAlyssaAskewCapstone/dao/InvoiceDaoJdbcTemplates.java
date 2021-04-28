@@ -23,7 +23,7 @@ public class InvoiceDaoJdbcTemplates implements InvoiceDao {
     private static final String DELETE_INVOICE_SQL =
             "delete from invoice where invoice_id = ?";
     private static final String UPDATE_INVOICE_SQL =
-            "update invoice set invoice_id =?, name=?,street=?,city=?,state=?,zipcode=?,item_type=?,item_id=?,unit_price=?,quantity=?,subtotal=?,tax=?,processing_fee=?,total=? where id=? ";
+            "update invoice set name=?,street=?,city=?,state=?,zipcode=?,item_type=?,item_id=?,unit_price=?,quantity=?,subtotal=?,tax=?,processing_fee=?,total=?";
     private static final String SELECT_INVOICES_BY_CUSTOMER_NAME_SQL =
             "select * from invoice where name = ? ";
     private JdbcTemplate jdbcTemplate;
@@ -68,6 +68,7 @@ public class InvoiceDaoJdbcTemplates implements InvoiceDao {
         invoice.setInvoiceId(id);
         return invoice;
     }
+
     @Override
     public List<Invoice> getInvoicesByCustomerName( String name) {
         return jdbcTemplate.query( SELECT_INVOICES_BY_CUSTOMER_NAME_SQL, this::mapRowToInvoice, name);

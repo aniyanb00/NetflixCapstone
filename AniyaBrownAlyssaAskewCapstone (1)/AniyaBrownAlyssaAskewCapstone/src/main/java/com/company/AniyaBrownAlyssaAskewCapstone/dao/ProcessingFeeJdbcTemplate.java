@@ -2,12 +2,14 @@ package com.company.AniyaBrownAlyssaAskewCapstone.dao;
 
 import com.company.AniyaBrownAlyssaAskewCapstone.model.ProcessingFee;
 
+import com.company.AniyaBrownAlyssaAskewCapstone.model.SalesTaxRate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,7 +17,7 @@ import java.sql.SQLException;
 public class ProcessingFeeJdbcTemplate implements ProcessingFeeDao{
     //prepared statements
     private static final String SELECT_PROCESS_FEE_SQL =
-            "select fee from processing_fee where product_type = ?";
+            "select * from processing_fee where product_type = ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -25,14 +27,12 @@ public class ProcessingFeeJdbcTemplate implements ProcessingFeeDao{
         this.jdbcTemplate = jdbcTemplate;
     }
     @Override
-    public ProcessingFee getProcessingFee(String productType){
-        try {
-            return jdbcTemplate.queryForObject(SELECT_PROCESS_FEE_SQL, this::mapRowToProcessingFee, productType);
+    public BigDecimal getProcessingFee(String productType){
 
-        } catch (EmptyResultDataAccessException e) {
-            // if nothing is returned just catch the exception and return null
-            return null;
-        }
+        ProcessingFee processingFee = jdbcTemplate.queryForObject(SELECT_PROCESS_FEE_SQL, this::mapRowToProcessingFee, productType);
+
+
+        return processingFee.getFee();
     }
 
 
