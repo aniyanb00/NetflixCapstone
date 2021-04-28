@@ -15,7 +15,7 @@ import java.util.List;
 public class InvoiceDaoJdbcTemplates implements InvoiceDao {
     //prepared statements
     private static final String INSERT_INVOICE_SQL =
-            "insert into invoice ( name, street, city, state, zipcode, item_type, item_id, unit_price, quantity,subtotal, tax, processing_fee, total) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "insert into invoice ( name, street, city, state, zipcode, item_type, item_id, unit_price, quantity,subtotal,tax,processing_fee,total) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SELECT_INVOICE_SQL =
             "select * from invoice where invoice_id =?";
     private static final String SELECT_ALL_INVOICES_SQL =
@@ -64,6 +64,7 @@ public class InvoiceDaoJdbcTemplates implements InvoiceDao {
                 invoice.getTax(),
                 invoice.getProcessingFee(),
                 invoice.getTotal());
+
         int id = jdbcTemplate.queryForObject("select last_insert_id()", Integer.class);
         invoice.setInvoiceId(id);
         return invoice;
@@ -73,6 +74,7 @@ public class InvoiceDaoJdbcTemplates implements InvoiceDao {
     public List<Invoice> getInvoicesByCustomerName( String name) {
         return jdbcTemplate.query( SELECT_INVOICES_BY_CUSTOMER_NAME_SQL, this::mapRowToInvoice, name);
     }
+
  @Override
  public void updateInvoice(Invoice invoice){
         jdbcTemplate.update(UPDATE_INVOICE_SQL,
@@ -102,7 +104,7 @@ public class InvoiceDaoJdbcTemplates implements InvoiceDao {
         Invoice invoice = new Invoice();
         invoice.setInvoiceId(rs.getInt("invoice_id"));
         invoice.setName(rs.getString("name"));
-        invoice.setStreet(rs.getString("state"));
+        invoice.setStreet(rs.getString("street"));
         invoice.setCity(rs.getString("city"));
         invoice.setState(rs.getString("state"));
         invoice.setZipcode(rs.getString("zipcode"));

@@ -1,6 +1,7 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.model;
 
 import java.math.BigDecimal;
+
 import java.util.Objects;
 public class Invoice {
     private int invoiceId;
@@ -141,4 +142,6 @@ public class Invoice {
     public int hashCode() {
         return Objects.hash(getInvoiceId(), getName(), getStreet(), getCity(), getState(), getZipcode(), getItemType(), getItemId(), getUnitPrice(), getQuantity(), getSubtotal(), getTax(), getProcessingFee(), getTotal());
     }
+
+
 }

@@ -48,12 +48,10 @@ public class InvoiceDaoJdbcTemplatesTest {
 
         //Act
         invoice = invoiceDao.addInvoice(invoice);
+
         Invoice invoice2 = invoiceDao.getInvoice(invoice.getInvoiceId());
 
-        //assert
         assertEquals(invoice2,invoice);
-
-        //assertEquals(invoice2,invoice);
 
         //Act
         invoiceDao.deleteInvoice(invoice.getInvoiceId());
