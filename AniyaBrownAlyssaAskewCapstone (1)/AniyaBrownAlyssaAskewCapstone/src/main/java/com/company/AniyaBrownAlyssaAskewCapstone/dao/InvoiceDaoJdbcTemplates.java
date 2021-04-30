@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public class InvoiceDaoJdbcTemplates implements InvoiceDao {
+
     //prepared statements
     private static final String INSERT_INVOICE_SQL =
             "insert into invoice ( name, street, city, state, zipcode, item_type, item_id, unit_price, quantity,subtotal,tax,processing_fee,total) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";

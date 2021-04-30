@@ -1,0 +1,180 @@
+package com.company.AniyaBrownAlyssaAskewCapstone.ServiceLayer;
+
+import com.company.AniyaBrownAlyssaAskewCapstone.dao.*;
+import com.company.AniyaBrownAlyssaAskewCapstone.model.*;
+import com.company.AniyaBrownAlyssaAskewCapstone.viewModel.InvoiceViewModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+@Service
+public class InvoiceService {
+
+    //need all doa
+    private final ConsoleDao consoleDao;
+    private final GameDao gameDao;
+    private final TShirtDao tShirtDao;
+    private final SalesTaxRateDao salesTaxRateDao;
+    private final ProcessingFeeDao processingFeeDao;
+    private final InvoiceDao invoiceDao;
+
+    @Autowired
+    public InvoiceService(ConsoleDao consoleDao, GameDao gameDao, TShirtDao tShirtDao, SalesTaxRateDao salesTaxRateDao, ProcessingFeeDao processingFeeDao, InvoiceDao invoiceDao) {
+        this.consoleDao = consoleDao;
+        this.gameDao = gameDao;
+        this.tShirtDao = tShirtDao;
+        this.salesTaxRateDao = salesTaxRateDao;
+        this.processingFeeDao = processingFeeDao;
+        this.invoiceDao = invoiceDao;
+    }
+
+
+    //Invoice API
+        @Transactional
+        public InvoiceViewModel saveInvoice(InvoiceViewModel viewModel){
+
+        Invoice invoice = new Invoice();
+
+        invoice.setName(viewModel.getName());
+        invoice.setStreet(viewModel.getStreet());
+        invoice.setCity(viewModel.getCity());
+        invoice.setState(viewModel.getState());
+        invoice.setZipcode(viewModel.getZip());
+        invoice.setItemType(viewModel.getItemType());
+        invoice.setItemId(viewModel.getItemID());
+        invoice.setUnitPrice(getUnitPrice(viewModel));
+        invoice.setQuantity(viewModel.getQuantity());
+        invoice.setSubtotal(getSubTotal(viewModel));
+        invoice.setTax(getStateTax(viewModel));
+        invoice.setProcessingFee(getProcessingFee(viewModel));
+        invoice.setTotal(calculatingTotal(viewModel));
+
+        invoice = invoiceDao.addInvoice(invoice);
+
+        viewModel.setId(invoice.getInvoiceId());
+
+
+        return viewModel;
+    }
+
+        public BigDecimal calculatingTotal(InvoiceViewModel viewModel){
+
+        //get the tax from the dao
+        BigDecimal stateTax = getStateTax(viewModel);
+
+        //getProcessingFee
+        BigDecimal processingFee = getProcessingFee(viewModel);
+
+        //get Subtotal
+        BigDecimal subTotal = getSubTotal(viewModel);
+
+        //calculating total = tax + processing fee + subtotal
+        BigDecimal total = new BigDecimal("0.00");
+        total = total.add(processingFee);
+        total = total.add(stateTax);
+        total = total.add(subTotal);
+
+        return total;
+
+    }
+
+        //service to get unit price based off of invoice view model
+        public BigDecimal getUnitPrice(InvoiceViewModel viewModel) {
+
+        String item_type = viewModel.getItemType();
+        BigDecimal unitPrice;
+
+        if (item_type.equalsIgnoreCase("games")) {
+            Game gameModel = gameDao.getGame(viewModel.getItemID());
+            unitPrice = gameModel.getPrice();
+        }
+        else if (item_type.equalsIgnoreCase("consoles")) {
+            Console consoleModel = consoleDao.getConsole(viewModel.getItemID());
+            unitPrice = consoleModel.getPrice();
+        }
+        else if (item_type.equalsIgnoreCase("t-shirts")) {
+            TShirt tShirtModel = tShirtDao.getTshirt(viewModel.getItemID());
+            unitPrice = tShirtModel.getPrice();
+        }
+        else {
+            throw new IllegalArgumentException("Invalid item_type");
+        }
+        return unitPrice;
+    }
+
+        //service to get state tax from invoice view model state
+        public BigDecimal getStateTax (InvoiceViewModel viewModel){
+
+            String state = viewModel.getState().toUpperCase();
+
+            BigDecimal overallTax = salesTaxRateDao.getSalesTaxRate(state);
+
+            overallTax = overallTax.multiply(getSubTotal(viewModel));
+
+            return overallTax;
+        }
+
+        public BigDecimal getProcessingFee (InvoiceViewModel viewModel){
+            //get the processing fee based on viewModel itemType ( need a function instead)
+            BigDecimal processingfee = processingFeeDao.getProcessingFee(viewModel.getItemType());
+
+            if (viewModel.getQuantity() < 10) {
+               processingfee = processingfee.add(BigDecimal.valueOf(15.59), MathContext.DECIMAL32);
+            }
+            return processingfee;
+        }
+
+        //service to calculate the subTotal
+        public BigDecimal getSubTotal (InvoiceViewModel viewModel){
+
+            BigDecimal unitPrice = getUnitPrice(viewModel);
+
+            BigDecimal subtotal = unitPrice.multiply(BigDecimal.valueOf(viewModel.getQuantity()));
+
+            return subtotal;
+
+        }
+
+        public boolean checkUpdateQuantity(InvoiceViewModel viewModel){
+            int quantity = viewModel.getQuantity();
+
+            String item_type = viewModel.getItemType();
+
+            if (item_type.equalsIgnoreCase("games")) {
+                Game gameModel = gameDao.getGame(viewModel.getItemID());
+                if(quantity > gameModel.getQuantity()){
+                    throw new IllegalArgumentException("Not enough in Game Inventory for" + gameModel.getId());
+                }
+
+                gameModel.setQuantity(gameModel.getQuantity() - quantity);
+                gameDao.updateGame(gameModel);
+            }
+            else if (item_type.equalsIgnoreCase("consoles")) {
+                Console consoleModel = consoleDao.getConsole(viewModel.getItemID());
+                if(quantity > consoleModel.getQuantity()){
+                    throw new IllegalArgumentException("Not enough in Console Inventory " + consoleModel.getId());
+                }
+
+                consoleModel.setQuantity(consoleModel.getQuantity() - quantity);
+                consoleDao.updateConsole(consoleModel);
+            }
+            else if (item_type.equalsIgnoreCase("t-shirts")) {
+                TShirt tShirtModel = tShirtDao.getTshirt(viewModel.getItemID());
+                if(quantity > tShirtModel.getQuantity()){
+                    throw new IllegalArgumentException("Not enough in TShirt Inventory " + tShirtModel.getId());
+                }
+                tShirtModel.setQuantity(tShirtModel.getQuantity() - quantity);
+                tShirtDao.updateTshirt(tShirtModel);
+            }
+            else {
+                throw new IllegalArgumentException("Invalid item_type");
+            }
+
+            return true;
+        }
+
+
+}
