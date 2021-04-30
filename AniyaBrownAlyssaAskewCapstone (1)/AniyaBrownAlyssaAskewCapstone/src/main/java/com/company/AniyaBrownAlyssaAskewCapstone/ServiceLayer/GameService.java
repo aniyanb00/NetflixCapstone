@@ -22,11 +22,11 @@ public class GameService {
         return gameDao.addGame(game);
     }
 
-    Game getGame(int id){
+    public Game getGame(int id){
         return gameDao.getGame(id);
     }
 
-    List<Game> getAllGames(){
+    public List<Game> getAllGames(){
         return gameDao.getAllGames();
     }
 
@@ -38,9 +38,9 @@ public class GameService {
         gameDao.deleteGame(id);
     }
 
-    List<Game> getGamebyStudio (String studio){return gameDao.getGamebyStudio(studio);}
+    public List<Game> getGamebyStudio (String studio){return gameDao.getGamebyStudio(studio);}
 
-    List<Game> getGamesbyTitle(String title){return gameDao.getGamesbyTitle(title);}
+    public List<Game> getGamesbyTitle(String title){return gameDao.getGamesbyTitle(title);}
 
-    List<Game> getGamesbyESRB(String esrb){return gameDao.getGamesbyESRB(esrb);}
+    public List<Game> getGamesbyESRB(String esrb){return gameDao.getGamesbyESRB(esrb);}
 }
