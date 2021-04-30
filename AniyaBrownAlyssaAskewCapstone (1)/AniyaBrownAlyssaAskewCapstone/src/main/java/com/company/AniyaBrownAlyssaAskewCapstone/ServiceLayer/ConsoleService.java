@@ -17,15 +17,15 @@ public class ConsoleService {
         this.consoleDao = consoleDao;
     }
 
-    Console addConsole(Console console){return consoleDao.addConsole(console);}
+    public Console addConsole(Console console){return consoleDao.addConsole(console);}
 
-    Console getConsole(int id){return consoleDao.getConsole(id);}
+    public Console getConsole(int id){return consoleDao.getConsole(id);}
 
-    List<Console> getAllConsoles(){return consoleDao.getAllConsoles();}
+    public List<Console> getAllConsoles(){return consoleDao.getAllConsoles();}
 
     void updateConsole(Console console){ consoleDao.updateConsole(console);}
 
     void deleteConsole(int id){consoleDao.deleteConsole(id);}
 
-    List<Console> getConsolebyManufacturer(String manufacturer){return consoleDao.getConsolebyManufacturer(manufacturer);}
+    public List<Console> getConsolebyManufacturer(String manufacturer){return consoleDao.getConsolebyManufacturer(manufacturer);}
 }

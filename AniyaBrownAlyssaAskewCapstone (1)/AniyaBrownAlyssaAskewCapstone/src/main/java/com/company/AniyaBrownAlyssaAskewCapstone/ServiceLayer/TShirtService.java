@@ -16,17 +16,17 @@ public class TShirtService {
         this.tShirtDao = tShirtDao;
     }
 
-    TShirt addTshirt(TShirt tShirt){return tShirtDao.addTshirt(tShirt);}
+    public TShirt addTshirt(TShirt tShirt){return tShirtDao.addTshirt(tShirt);}
 
-    TShirt getTshirt(int id){return tShirtDao.getTshirt(id);}
+    public TShirt getTshirt(int id){return tShirtDao.getTshirt(id);}
 
-    List<TShirt> getAllTshirts(){return tShirtDao.getAllTshirts();}
+    public List<TShirt> getAllTshirts(){return tShirtDao.getAllTshirts();}
 
     void deleteTshirt(int id){tShirtDao.deleteTshirt(id);}
 
     void updateTshirt(TShirt tShirt){tShirtDao.updateTshirt(tShirt);}
 
-    List<TShirt> getbyColor(String color){return tShirtDao.getbyColor(color);};
+    public List<TShirt> getbyColor(String color){return tShirtDao.getbyColor(color);};
 
-    List<TShirt> getbySize(String size){return tShirtDao.getbySize(size);}
+    public List<TShirt> getbySize(String size){return tShirtDao.getbySize(size);}
 }
