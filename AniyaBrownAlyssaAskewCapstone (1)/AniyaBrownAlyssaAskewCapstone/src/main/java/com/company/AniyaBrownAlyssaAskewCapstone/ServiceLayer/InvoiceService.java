@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.List;
 
 @Service
 public class InvoiceService {
@@ -34,7 +35,7 @@ public class InvoiceService {
 
     //Invoice API
         @Transactional
-        public InvoiceViewModel saveInvoice(InvoiceViewModel viewModel){
+        public Invoice saveInvoice(InvoiceViewModel viewModel){
 
         Invoice invoice = new Invoice();
 
@@ -54,11 +55,17 @@ public class InvoiceService {
 
         invoice = invoiceDao.addInvoice(invoice);
 
-        viewModel.setId(invoice.getInvoiceId());
-
-
-        return viewModel;
+        return invoice;
     }
+        public boolean isCorrectStateCode(InvoiceViewModel viewModel){
+            SalesTaxRate state = salesTaxRateDao.getSalesTaxRate2(viewModel.getState());
+
+            if(state == null){
+                throw new IllegalArgumentException("Incorrect StateCode");
+            }
+
+            return true;
+        }
 
         public BigDecimal calculatingTotal(InvoiceViewModel viewModel){
 
@@ -175,6 +182,20 @@ public class InvoiceService {
 
             return true;
         }
+
+
+        public Invoice getInvoice (int invoiceId){
+        return invoiceDao.getInvoice(invoiceId);
+    }
+
+        public List<Invoice> getAllInvoices(){return invoiceDao.getAllInvoices();}
+
+        public void updateInvoice(Invoice invoice){invoiceDao.updateInvoice(invoice);}
+
+        public void deleteInvoice(int invoiceId){invoiceDao.deleteInvoice(invoiceId);}
+
+        public List<Invoice> getInvoicesByCustomerName(String name){return invoiceDao.getInvoicesByCustomerName(name);}
+
 
 
 }

@@ -21,6 +21,7 @@ public class SalesTaxRateDaoJdbcTemplate implements SalesTaxRateDao{
             "select * from sales_tax_rate where state = ?";
 
 
+
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -36,6 +37,12 @@ public class SalesTaxRateDaoJdbcTemplate implements SalesTaxRateDao{
 
     }
 
+    @Override
+    public SalesTaxRate getSalesTaxRate2(String state){
+        SalesTaxRate sale = jdbcTemplate.queryForObject(SELECT_SALES_TAX_RATE_SQL, this::mapRowToSalesTaxRate, state);
+
+        return sale;
+    }
 
 
     //rowMapper

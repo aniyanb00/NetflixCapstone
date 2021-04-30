@@ -6,4 +6,6 @@ import java.math.BigDecimal;
 
 public interface SalesTaxRateDao {
     BigDecimal getSalesTaxRate(String state);
+
+    SalesTaxRate getSalesTaxRate2(String state);
 }

@@ -35,4 +35,5 @@ public class SalesTaxRate {
     public int hashCode() {
         return Objects.hash(getState(), getRate());
     }
+
 }

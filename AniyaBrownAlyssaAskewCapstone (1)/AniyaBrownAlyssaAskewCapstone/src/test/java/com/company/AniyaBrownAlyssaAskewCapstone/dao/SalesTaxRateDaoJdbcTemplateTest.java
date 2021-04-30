@@ -1,5 +1,6 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.dao;
 
+import com.company.AniyaBrownAlyssaAskewCapstone.model.SalesTaxRate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,16 @@ public class SalesTaxRateDaoJdbcTemplateTest {
         String state = "VA";
         BigDecimal expectedRate = salesTaxRateDao.getSalesTaxRate(state);
         assertEquals(expectedRate, new BigDecimal("0.06"));
+    }
+
+    @Test
+    public void getSalesTaxRateDao2( ){
+        SalesTaxRate salesTaxRate = new SalesTaxRate();
+        salesTaxRate.setState("VA");
+        salesTaxRate.setRate(new BigDecimal("0.06"));
+
+        SalesTaxRate salesTaxRate1 = salesTaxRateDao.getSalesTaxRate2(salesTaxRate.getState());
+
+        assertEquals(salesTaxRate1,salesTaxRate);
     }
 }

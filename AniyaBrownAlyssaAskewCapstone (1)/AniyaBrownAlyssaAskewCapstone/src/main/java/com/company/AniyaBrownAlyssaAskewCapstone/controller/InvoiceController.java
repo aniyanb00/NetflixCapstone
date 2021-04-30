@@ -1,7 +1,9 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.controller;
 
-
+import com.company.AniyaBrownAlyssaAskewCapstone.ServiceLayer.InvoiceService;
 import com.company.AniyaBrownAlyssaAskewCapstone.model.Invoice;
+import com.company.AniyaBrownAlyssaAskewCapstone.viewModel.InvoiceViewModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,51 +12,61 @@ import java.util.List;
 
 @RestController
 public class InvoiceController {
+
+    @Autowired
+    private InvoiceService invoiceService;
+
     //create Invoice ->post
     @RequestMapping(value = "/invoice", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Invoice createInvoice(@RequestBody @Valid Invoice invoice) {
-        return InvoiceService.saveInvoice(invoice);
-    }
-    //Read (get Invoice)
+    public Invoice createInvoice(@RequestBody @Valid InvoiceViewModel invoice) {
+        if(invoiceService.checkUpdateQuantity(invoice)
+                && invoice.getQuantity() > 0
+                && invoiceService.isCorrectStateCode(invoice)){
+            return  invoiceService.saveInvoice(invoice);
+        }
+        else{
+            throw new IllegalArgumentException(HttpStatus.BAD_REQUEST.toString());
+        }
 
+    }
+
+    //get Invoice by id
     @RequestMapping(value="/invoice/{id}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public Invoice getInvoice(@PathVariable int id){
-        return InvoiceService.findInvoice(id);
+        return invoiceService.getInvoice(id);
     }
+
     //get all Invoice
-    @RequestMapping(value = "/invoice", method = RequestMethod.PUT)
+    @RequestMapping(value = "/invoice", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public List<Invoice> getAllInvoice(){
 
-        return InvoiceService.getAllInvoices();
-
+        return invoiceService.getAllInvoices();
     }
+
     //update invoice
-      @RequestMapping(value = "/invoice", method = RequestMethod.PUT)
-        @ResponseStatus(value = HttpStatus.OK)
-        public void updateInvoice(@PathVariable Invoice invoice){
-           return InvoiceService.updateInvoice(invoice);
+    @RequestMapping(value = "/invoice", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void updateInvoice(@PathVariable Invoice invoice){
+           invoiceService.updateInvoice(invoice);
 
       }
-//delete a Invoice
+
+    //delete a Invoice
     @RequestMapping(value = "/invoice/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteInvoice(@PathVariable int id){
-        return InvoiceService.removeInvoice(id);
+
+        invoiceService.deleteInvoice(id);
     }
-    //get by Customer name
+
+    //get by invoice by Customer name
     @RequestMapping(value="/invoice/{name}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
-    public Invoice getInvoiceByCustomerName(@PathVariable String name){
-        return InvoiceService.findInvoiceByCustomerName(name);
-    }
-    //get by size
-    @RequestMapping(value="/invoice/{size}", method = RequestMethod.GET)
-    @ResponseStatus(value =HttpStatus.OK)
-    public Invoice getInvoiceBySize(@PathVariable String size){
-        return InvoiceService.findInvoiceBySize(size);
+    public List<Invoice> getInvoiceByCustomerName(@PathVariable String name){
+        return invoiceService.getInvoicesByCustomerName(name);
     }
 
 
