@@ -16,15 +16,15 @@ public class TShirtService {
         this.tShirtDao = tShirtDao;
     }
 
-    public TShirt addTshirt(TShirt tShirt){return tShirtDao.addTshirt(tShirt);}
+    public TShirt saveTshirt(TShirt tShirt){return tShirtDao.addTshirt(tShirt);}
 
     public TShirt getTshirt(int id){return tShirtDao.getTshirt(id);}
 
     public List<TShirt> getAllTshirts(){return tShirtDao.getAllTshirts();}
 
-    void deleteTshirt(int id){tShirtDao.deleteTshirt(id);}
+    public void deleteTshirt(int id){tShirtDao.deleteTshirt(id);}
 
-    void updateTshirt(TShirt tShirt){tShirtDao.updateTshirt(tShirt);}
+    public void updateTshirt(TShirt tShirt){tShirtDao.updateTshirt(tShirt);}
 
     public List<TShirt> getbyColor(String color){return tShirtDao.getbyColor(color);};
 

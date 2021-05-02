@@ -19,7 +19,7 @@ public class ConsoleController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public Console createConsole(@RequestBody @Valid Console console) {
 
-        return consoleService.addConsole(console);
+        return consoleService.saveConsole(console);
     }
     //Read (get  console)
 
@@ -28,6 +28,7 @@ public class ConsoleController {
     public Console getConsole(@PathVariable int id){
         return consoleService.getConsole(id);
     }
+
     //get all console
     @RequestMapping(value = "/console", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -52,10 +53,11 @@ public class ConsoleController {
     public void deleteConsole(@PathVariable int id){
          consoleService.deleteConsole(id);
     }
+
     //get by Manufacturer
-    @RequestMapping(value="/console", method = RequestMethod.GET)
+    @RequestMapping(value="/console/{manufacturer}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
-    public List<Console> getConsoleByManufacturer(@RequestParam String manufacturer){
+    public List<Console> getConsoleByManufacturer(@PathVariable String manufacturer){
         return consoleService.getConsolebyManufacturer(manufacturer);
     }
 

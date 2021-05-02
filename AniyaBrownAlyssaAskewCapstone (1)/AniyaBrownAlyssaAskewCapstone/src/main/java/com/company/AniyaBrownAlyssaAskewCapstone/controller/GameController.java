@@ -25,7 +25,7 @@ public class GameController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public Game createGame(@RequestBody @Valid Game game) {
 
-        return gameService.addGame(game);
+        return gameService.saveGame(game);
     }
     //Read (get  game)
 
@@ -34,6 +34,7 @@ public class GameController {
     public Game getGame(@PathVariable int id){
         return gameService.getGame(id);
     }
+
     //get all game
     @RequestMapping(value = "/game", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -58,23 +59,25 @@ public class GameController {
     public void deleteGame(@PathVariable int id) {
       gameService.deleteGame(id);
 }
+
 //get by studio
-@RequestMapping(value="/game", method = RequestMethod.GET)
+@RequestMapping(value="/game/{studio}", method = RequestMethod.GET)
 @ResponseStatus(value =HttpStatus.OK)
-public List<Game> getGameByStudio(@RequestParam String studio){
+public List<Game> getGameByStudio(@PathVariable String studio){
     return gameService.getGamebyStudio(studio);
 }
+
 //get by ESRB
-@RequestMapping(value="/game", method = RequestMethod.GET)
+@RequestMapping(value="/game/{esrb}", method = RequestMethod.GET)
 @ResponseStatus(value =HttpStatus.OK)
-public List<Game> getGameByESRB(@RequestParam String esrb){
+public List<Game> getGameByESRB(@PathVariable String esrb){
    return gameService.getGamesbyESRB(esrb);
 }
 
 //get by Title
-@RequestMapping(value="/game", method = RequestMethod.GET)
+@RequestMapping(value="/game/{method}", method = RequestMethod.GET)
 @ResponseStatus(value =HttpStatus.OK)
-public List<Game> getGameByTitle(@RequestParam String title){
+public List<Game> getGameByTitle(@PathVariable String title){
     return gameService.getGamesbyTitle(title);
 }
 }

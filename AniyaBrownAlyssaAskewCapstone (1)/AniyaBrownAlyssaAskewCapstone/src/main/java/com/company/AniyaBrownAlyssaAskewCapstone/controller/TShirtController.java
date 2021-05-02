@@ -21,7 +21,7 @@ public class TShirtController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public TShirt createTShirt(@RequestBody @Valid TShirt tShirt) {
 
-        return tShirtService.addTshirt(tShirt);
+        return tShirtService.saveTshirt(tShirt);
     }
     //Read (get  TShirt)
 
@@ -55,16 +55,18 @@ public class TShirtController {
     public void deleteTShirt(@PathVariable int id){
          tShirtService.deleteTshirt(id);
     }
+
     //get by Color
-    @RequestMapping(value="/TShirt", method = RequestMethod.GET)
+    @RequestMapping(value="/TShirt/{color}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
-    public List<TShirt> getConsoleByColor(@RequestParam String color){
+    public List<TShirt> getConsoleByColor(@PathVariable String color){
         return tShirtService.getbyColor(color);
     }
+
     //get by size
-    @RequestMapping(value="/TShirt", method = RequestMethod.GET)
+    @RequestMapping(value="/TShirt{size}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
-    public List<TShirt> getConsoleBySize(@RequestParam String size){
+    public List<TShirt> getConsoleBySize(@PathVariable String size){
         return tShirtService.getbySize(size);
     }
 }
