@@ -20,16 +20,27 @@ public class TShirtController {
     @RequestMapping(value = "/TShirt", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public TShirt createTShirt(@RequestBody @Valid TShirt tShirt) {
+        try{
+            return tShirtService.saveTshirt(tShirt);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid Body");
+        }
 
-        return tShirtService.saveTshirt(tShirt);
     }
     //Read (get  TShirt)
 
     @RequestMapping(value="/TShirt/{id}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public TShirt getTShirt(@PathVariable int id){
-        return tShirtService.getTshirt(id);
+        try{
+            return tShirtService.getTshirt(id);
+
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("ID not found");
+        }
+
     }
+
     //get all TShirt
     @RequestMapping(value = "/TShirt", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -42,6 +53,7 @@ public class TShirtController {
         return allTshirt;
 
     }
+
     //update tshirt
     @RequestMapping(value = "/TShirt", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
@@ -53,20 +65,39 @@ public class TShirtController {
     @RequestMapping(value = "/TShirt/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteTShirt(@PathVariable int id){
-         tShirtService.deleteTshirt(id);
+        try{
+            tShirtService.deleteTshirt(id);
+
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("ID not found");
+        }
+
     }
 
     //get by Color
     @RequestMapping(value="/TShirt/{color}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<TShirt> getConsoleByColor(@PathVariable String color){
-        return tShirtService.getbyColor(color);
+        try{
+            return tShirtService.getbyColor(color);
+
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Color not found");
+        }
+
     }
 
     //get by size
     @RequestMapping(value="/TShirt{size}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<TShirt> getConsoleBySize(@PathVariable String size){
-        return tShirtService.getbySize(size);
+        try{
+            return tShirtService.getbySize(size);
+
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Size not found");
+        }
+
+
     }
 }

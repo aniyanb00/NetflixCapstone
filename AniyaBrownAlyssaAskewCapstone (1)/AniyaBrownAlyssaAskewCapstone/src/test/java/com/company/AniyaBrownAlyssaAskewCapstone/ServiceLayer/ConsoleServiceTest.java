@@ -81,7 +81,7 @@ public class ConsoleServiceTest {
         console.setProcessor("AMD Zen 2");
         console.setPrice(new BigDecimal("300.00"));
         console.setQuantity(1);
-        System.out.println(console.toString());
+
 
         Console console1 = new Console();
         console1.setModel("Playstation 5");
