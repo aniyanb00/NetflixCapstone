@@ -120,6 +120,7 @@ public class InvoiceService {
             BigDecimal overallTax = salesTaxRateDao.getSalesTaxRate(state);
 
             overallTax = overallTax.multiply(getSubTotal(viewModel));
+            overallTax = overallTax.setScale(2);
 
             return overallTax;
         }
@@ -128,7 +129,7 @@ public class InvoiceService {
             //get the processing fee based on viewModel itemType ( need a function instead)
             BigDecimal processingfee = processingFeeDao.getProcessingFee(viewModel.getItemType());
 
-            if (viewModel.getQuantity() < 10) {
+            if (viewModel.getQuantity() > 10) {
                processingfee = processingfee.add(BigDecimal.valueOf(15.59), MathContext.DECIMAL32);
             }
             return processingfee;

@@ -26,7 +26,7 @@ public class InvoiceController {
             return  invoiceService.saveInvoice(invoice);
         }
         else{
-            throw new IllegalArgumentException(HttpStatus.BAD_REQUEST.toString());
+            throw new IllegalArgumentException("Invalid Response");
         }
 
     }
@@ -35,21 +35,30 @@ public class InvoiceController {
     @RequestMapping(value="/invoice/{id}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public Invoice getInvoice(@PathVariable int id){
-        return invoiceService.getInvoice(id);
+        try{
+            return invoiceService.getInvoice(id);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("ID Not Found");
+        }
+
     }
 
     //get all Invoice
     @RequestMapping(value = "/invoice", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public List<Invoice> getAllInvoice(){
+        List<Invoice> allInvoice = invoiceService.getAllInvoices();
 
-        return invoiceService.getAllInvoices();
+        if(allInvoice == null){
+            throw new IllegalArgumentException("No Invoices Found");
+        }
+        return allInvoice;
     }
 
     //update invoice
     @RequestMapping(value = "/invoice", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateInvoice(@PathVariable Invoice invoice){
+    public void updateInvoice(@RequestBody Invoice invoice){
            invoiceService.updateInvoice(invoice);
 
       }
@@ -58,15 +67,23 @@ public class InvoiceController {
     @RequestMapping(value = "/invoice/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteInvoice(@PathVariable int id){
-
-        invoiceService.deleteInvoice(id);
+        try{
+           invoiceService.deleteInvoice(id);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("ID not found");
+        }
     }
 
     //get by invoice by Customer name
     @RequestMapping(value="/invoice/{name}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<Invoice> getInvoiceByCustomerName(@PathVariable String name){
-        return invoiceService.getInvoicesByCustomerName(name);
+
+        try{
+            return invoiceService.getInvoicesByCustomerName(name);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Name not found");
+        }
     }
 
 

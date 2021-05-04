@@ -24,8 +24,12 @@ public class GameController {
     @RequestMapping(value = "/game", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public Game createGame(@RequestBody @Valid Game game) {
+        try{
+            return gameService.saveGame(game);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid Body");
+        }
 
-        return gameService.saveGame(game);
     }
     //Read (get  game)
 
@@ -55,29 +59,48 @@ public class GameController {
     }
 //delete a game
 @RequestMapping(value = "/game/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteGame(@PathVariable int id) {
-      gameService.deleteGame(id);
+@ResponseStatus(value = HttpStatus.NO_CONTENT)
+public void deleteGame(@PathVariable int id) {
+        try{
+            gameService.deleteGame(id);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("ID Not Found - Cannot Delete");
+        }
+
 }
 
 //get by studio
 @RequestMapping(value="/game/{studio}", method = RequestMethod.GET)
 @ResponseStatus(value =HttpStatus.OK)
 public List<Game> getGameByStudio(@PathVariable String studio){
-    return gameService.getGamebyStudio(studio);
+        try{
+            return gameService.getGamebyStudio(studio);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Studio not Found");
+        }
+
 }
 
 //get by ESRB
 @RequestMapping(value="/game/{esrb}", method = RequestMethod.GET)
 @ResponseStatus(value =HttpStatus.OK)
 public List<Game> getGameByESRB(@PathVariable String esrb){
-   return gameService.getGamesbyESRB(esrb);
+        try{
+            return gameService.getGamesbyESRB(esrb);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("ESRB rating not Found");
+        }
 }
 
 //get by Title
 @RequestMapping(value="/game/{method}", method = RequestMethod.GET)
 @ResponseStatus(value =HttpStatus.OK)
 public List<Game> getGameByTitle(@PathVariable String title){
-    return gameService.getGamesbyTitle(title);
+        try{
+            return gameService.getGamesbyTitle(title);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Title not Found");
+        }
+
 }
 }

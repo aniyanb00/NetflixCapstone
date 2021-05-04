@@ -18,15 +18,23 @@ public class ConsoleController {
     @RequestMapping(value = "/console", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public Console createConsole(@RequestBody @Valid Console console) {
-
-        return consoleService.saveConsole(console);
+        try{
+            return consoleService.saveConsole(console);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid Body");
+        }
     }
-    //Read (get  console)
 
+    //Read (get  console)
     @RequestMapping(value="/console/{id}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public Console getConsole(@PathVariable int id){
-        return consoleService.getConsole(id);
+        try{
+            return consoleService.getConsole(id);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("ID not found");
+        }
+
     }
 
     //get all console
@@ -47,18 +55,27 @@ public class ConsoleController {
         consoleService.updateConsole(console);
 
     }
-//delete a console
+    //delete a console
     @RequestMapping(value = "/console/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteConsole(@PathVariable int id){
-         consoleService.deleteConsole(id);
+         try{
+             consoleService.deleteConsole(id);
+         }catch(IllegalArgumentException e){
+             throw new IllegalArgumentException("ID Not Found - Cannot Delete");
+         }
+
     }
 
     //get by Manufacturer
     @RequestMapping(value="/console/{manufacturer}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<Console> getConsoleByManufacturer(@PathVariable String manufacturer){
-        return consoleService.getConsolebyManufacturer(manufacturer);
+        try{
+            return consoleService.getConsolebyManufacturer(manufacturer);
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Manufacturer not found");
+        }
     }
 
 
