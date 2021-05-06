@@ -64,35 +64,28 @@ public class InvoiceControllerTest {
         invoice.setName("Bill");
         invoice.setStreet("Pinetta Drive");
         invoice.setCity("Richmond");
-        invoice.setState("Virginia");
+        invoice.setState("VA");
         invoice.setZipcode("23164");
         invoice.setItemType("t-shirt");
-        invoice.setItemId(2784);
-        invoice.setUnitPrice(new BigDecimal("8.99"));
+        invoice.setItemId(1);
         invoice.setQuantity(1);
-        invoice.setSubtotal(new BigDecimal("8.99"));
-        invoice.setTax(new BigDecimal("0.06"));
-        invoice.setProcessingFee(new BigDecimal("1.98"));
-        invoice.setTotal(new BigDecimal("11.5"));
-        invoice.setInvoiceId(2);
-
+        //invoice.setInvoiceId(2);
         String inputJson = mapper.writeValueAsString(invoice);
+
+
         Invoice invoice2 = new Invoice();
         invoice2.setName("Mary");
         invoice2.setStreet("Willsbury Road");
         invoice2.setCity("Willamsburg");
-        invoice2.setState("Virginia");
+        invoice2.setState("VA");
         invoice2.setZipcode("23164");
         invoice2.setItemType("game");
-        invoice2.setItemId(2784);
-        invoice2.setUnitPrice(new BigDecimal("14.99"));
-        invoice2.setQuantity(1);
-        invoice2.setSubtotal(new BigDecimal("14.99"));
-        invoice2.setTax(new BigDecimal("0.06"));
-        invoice2.setProcessingFee(new BigDecimal("1.49"));
-        invoice2.setTotal(new BigDecimal("17.38"));
-        invoice2.setInvoiceId(2);
-        String outputJson = mapper.writeValueAsString(invoice2);
+        invoice2.setItemId(4);
+
+        invoice2.setQuantity(2);
+
+
+       // String outputJson = mapper.writeValueAsString(invoice2);
         mockMvc.perform(
                 post("/invoice")
                         .content(inputJson)
@@ -109,16 +102,12 @@ public class InvoiceControllerTest {
         invoice.setName("Jill");
         invoice.setStreet("Wood Park Drive");
         invoice.setCity("Yorktown");
-        invoice.setState("Virginia");
+        invoice.setState("VA");
         invoice.setZipcode("23062");
         invoice.setItemType("game");
-        invoice.setItemId(2784);
-        invoice.setUnitPrice(new BigDecimal("14.99"));
+        invoice.setItemId(2);
         invoice.setQuantity(1);
-        invoice.setSubtotal(new BigDecimal("14.99"));
-        invoice.setTax(new BigDecimal("0.06"));
-        invoice.setProcessingFee(new BigDecimal("1.49"));
-        invoice.setTotal(new BigDecimal("17.38"));
+
 
 
         String outputJson = mapper.writeValueAsString(invoice);
@@ -126,7 +115,7 @@ public class InvoiceControllerTest {
                 get("/invoice/2"))
                 .andDo(print())
                 .andExpect(status().isOk());
-        // .andExpect(content().json(outputJson));
+              // .andExpect(content().json(outputJson));
 
     }
     @Test
@@ -136,16 +125,12 @@ public class InvoiceControllerTest {
         invoice.setName("Ryan");
         invoice.setStreet("Willsbury Road");
         invoice.setCity("Williamsburg");
-        invoice.setState("Virginia");
+        invoice.setState("VA");
         invoice.setZipcode("23164");
         invoice.setItemType( "console");
-        invoice.setItemId(123 );
-        invoice.setUnitPrice(new BigDecimal("14.99"));
+        invoice.setItemId(3 );
         invoice.setQuantity(1);
-        invoice.setSubtotal(new BigDecimal("14.99"));
-        invoice.setTax(new BigDecimal("0.06"));
-        invoice.setProcessingFee(new BigDecimal("1.49"));
-        invoice.setTotal(new BigDecimal("17.38"));
+
         String inputJson = mapper.writeValueAsString(invoice);
         mockMvc.perform(
                 put("/invoice")
@@ -170,7 +155,7 @@ public class InvoiceControllerTest {
         invoice.setName("Jake");
         invoice.setStreet("Wood Pine Drive");
         invoice.setCity("Newport News");
-        invoice.setState("Virginia");
+        invoice.setState("VA");
         invoice.setZipcode("23064");
         invoice.setItemType("game");
         invoice.setItemId(2784);
