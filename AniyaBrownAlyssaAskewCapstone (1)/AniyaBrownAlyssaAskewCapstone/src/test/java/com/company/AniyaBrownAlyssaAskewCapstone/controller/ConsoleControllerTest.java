@@ -22,11 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import java.math.BigDecimal;
-import java.util.List;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,7 +35,7 @@ public class ConsoleControllerTest {
 
 
     @Autowired
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @MockBean
     private ConsoleService consoleService;
@@ -73,17 +69,8 @@ public class ConsoleControllerTest {
         console.setQuantity(1);
         console.setProcessor("processor1");
         console.setPrice(new BigDecimal("150"));
-        //console.setId(4);
         String inputJson = mapper.writeValueAsString(console);
-        Console console2 = new Console();
-        console2.setManufacturer("Activi");
-        console2.setModel("800");
-        console2.setMemory_amount("4");
-        console2.setQuantity(2);
-        console2.setProcessor("processor2");
-        console2.setPrice(new BigDecimal("180"));
-        console2.setId(4);
-        String outputJson = mapper.writeValueAsString(console2);
+
         mockMvc.perform(
                 post("/console")
                 .content(inputJson)

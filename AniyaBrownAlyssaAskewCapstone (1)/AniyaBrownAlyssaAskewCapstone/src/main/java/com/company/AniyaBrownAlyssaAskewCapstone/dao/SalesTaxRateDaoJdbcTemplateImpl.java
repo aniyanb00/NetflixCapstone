@@ -22,7 +22,7 @@ public class SalesTaxRateDaoJdbcTemplateImpl implements SalesTaxRateDao{
 
 
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public SalesTaxRateDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate){

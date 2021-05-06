@@ -19,7 +19,7 @@ public class ProcessingFeeJdbcTemplateImpl implements ProcessingFeeDao{
     private static final String SELECT_PROCESS_FEE_SQL =
             "select * from processing_fee where product_type = ?";
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public ProcessingFeeJdbcTemplateImpl(JdbcTemplate jdbcTemplate){

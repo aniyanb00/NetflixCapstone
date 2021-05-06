@@ -34,7 +34,7 @@ public class ConsoleDaoJdbcTemplateImpl implements ConsoleDao {
             "select * from console where manufacturer = ?";
 
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     //constructor
     @Autowired

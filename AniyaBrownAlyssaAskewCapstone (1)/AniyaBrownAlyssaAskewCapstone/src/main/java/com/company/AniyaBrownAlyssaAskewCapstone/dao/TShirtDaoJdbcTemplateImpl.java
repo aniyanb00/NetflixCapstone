@@ -38,7 +38,7 @@ public class TShirtDaoJdbcTemplateImpl implements TShirtDao {
 
 
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     //constructor
     @Autowired

@@ -26,7 +26,7 @@ public class TShirtService {
 
     public void updateTshirt(TShirt tShirt){tShirtDao.updateTshirt(tShirt);}
 
-    public List<TShirt> getbyColor(String color){return tShirtDao.getbyColor(color);};
+    public List<TShirt> getbyColor(String color){return tShirtDao.getbyColor(color);}
 
     public List<TShirt> getbySize(String size){return tShirtDao.getbySize(size);}
 }

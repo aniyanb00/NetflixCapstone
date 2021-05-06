@@ -39,21 +39,30 @@ public class InvoiceService {
 
         Invoice invoice = new Invoice();
 
-        invoice.setName(viewModel.getName());
-        invoice.setStreet(viewModel.getStreet());
-        invoice.setCity(viewModel.getCity());
-        invoice.setState(viewModel.getState());
-        invoice.setZipcode(viewModel.getZip());
-        invoice.setItemType(viewModel.getItemType());
-        invoice.setItemId(viewModel.getItemID());
-        invoice.setUnitPrice(getUnitPrice(viewModel));
-        invoice.setQuantity(viewModel.getQuantity());
-        invoice.setSubtotal(getSubTotal(viewModel));
-        invoice.setTax(getStateTax(viewModel));
-        invoice.setProcessingFee(getProcessingFee(viewModel));
-        invoice.setTotal(calculatingTotal(viewModel));
+        if(checkUpdateQuantity(viewModel)
+                && viewModel.getQuantity() > 0
+                && isCorrectStateCode(viewModel)){
+            invoice.setName(viewModel.getName());
+            invoice.setStreet(viewModel.getStreet());
+            invoice.setCity(viewModel.getCity());
+            invoice.setState(viewModel.getState());
+            invoice.setZipcode(viewModel.getZip());
+            invoice.setItemType(viewModel.getItemType());
+            invoice.setItemId(viewModel.getItemID());
+            invoice.setUnitPrice(getUnitPrice(viewModel));
+            invoice.setQuantity(viewModel.getQuantity());
+            invoice.setSubtotal(getSubTotal(viewModel));
+            invoice.setTax(getStateTax(viewModel));
+            invoice.setProcessingFee(getProcessingFee(viewModel));
+            invoice.setTotal(calculatingTotal(viewModel));
 
-        invoice = invoiceDao.addInvoice(invoice);
+            invoice = invoiceDao.addInvoice(invoice);
+
+        }
+        else{
+            throw new IllegalArgumentException("Invalid Response");
+        }
+
 
         return invoice;
     }

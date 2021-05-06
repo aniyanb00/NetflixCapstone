@@ -14,7 +14,7 @@ import java.util.List;
 public class InvoiceController {
 
     @Autowired
-    private InvoiceService invoiceService;
+    private final InvoiceService invoiceService;
 
     public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
@@ -25,17 +25,7 @@ public class InvoiceController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public Invoice createInvoice(@RequestBody InvoiceViewModel invoice) {
 
-
-        if(invoiceService.checkUpdateQuantity(invoice)
-                && invoice.getQuantity() > 0
-                && invoiceService.isCorrectStateCode(invoice)){
-            return  invoiceService.saveInvoice(invoice);
-        }
-        else{
-            throw new IllegalArgumentException("Invalid Response");
-        }
-
-
+        return  invoiceService.saveInvoice(invoice);
     }
 
     //get Invoice by id
@@ -82,7 +72,7 @@ public class InvoiceController {
     }
 
     //get by invoice by Customer name
-    @RequestMapping(value="/invoice/{name}", method = RequestMethod.GET)
+    @RequestMapping(value="/invoice/name/{name}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<Invoice> getInvoiceByCustomerName(@PathVariable String name){
 

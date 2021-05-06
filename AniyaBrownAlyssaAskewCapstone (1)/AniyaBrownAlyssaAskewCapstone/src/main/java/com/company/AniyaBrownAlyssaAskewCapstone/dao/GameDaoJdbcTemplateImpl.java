@@ -40,7 +40,7 @@ public class GameDaoJdbcTemplateImpl implements GameDao{
             "select * from game where title = ?";
 
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
 
     //constructor

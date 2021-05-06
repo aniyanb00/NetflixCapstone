@@ -195,7 +195,7 @@ public class InvoiceServiceTest {
         console.setMemory_amount("500GB");
         console.setProcessor("AMD Zen 2");
         console.setPrice(new BigDecimal("300.00"));
-        console.setQuantity(1);
+        console.setQuantity(50);
 
         Console console1 = new Console();
         console1.setModel("Playstation 5");

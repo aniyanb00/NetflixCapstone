@@ -34,7 +34,7 @@ public class InvoiceControllerTest {
 
 
     @Autowired
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @MockBean
     private InvoiceService invoiceService;
@@ -60,32 +60,19 @@ public class InvoiceControllerTest {
     }
     @Test
     public void shouldReturnNewInvoiceOnPostRequest() throws Exception {
-        Invoice invoice = new Invoice();
+        InvoiceViewModel invoice = new InvoiceViewModel();
         invoice.setName("Bill");
         invoice.setStreet("Pinetta Drive");
         invoice.setCity("Richmond");
         invoice.setState("VA");
-        invoice.setZipcode("23164");
-        invoice.setItemType("t-shirt");
-        invoice.setItemId(1);
+        invoice.setZip("23164");
+        invoice.setItemType("Games");
+        invoice.setItemID(56);
         invoice.setQuantity(1);
-        //invoice.setInvoiceId(2);
+
+
         String inputJson = mapper.writeValueAsString(invoice);
 
-
-        Invoice invoice2 = new Invoice();
-        invoice2.setName("Mary");
-        invoice2.setStreet("Willsbury Road");
-        invoice2.setCity("Willamsburg");
-        invoice2.setState("VA");
-        invoice2.setZipcode("23164");
-        invoice2.setItemType("game");
-        invoice2.setItemId(4);
-
-        invoice2.setQuantity(2);
-
-
-       // String outputJson = mapper.writeValueAsString(invoice2);
         mockMvc.perform(
                 post("/invoice")
                         .content(inputJson)
@@ -98,26 +85,12 @@ public class InvoiceControllerTest {
     @Test
     public void shouldReturnInvoicesById() throws Exception {
 
-        Invoice invoice = new Invoice();
-        invoice.setName("Jill");
-        invoice.setStreet("Wood Park Drive");
-        invoice.setCity("Yorktown");
-        invoice.setState("VA");
-        invoice.setZipcode("23062");
-        invoice.setItemType("game");
-        invoice.setItemId(2);
-        invoice.setQuantity(1);
-
-
-
-        String outputJson = mapper.writeValueAsString(invoice);
         mockMvc.perform(
                 get("/invoice/2"))
                 .andDo(print())
                 .andExpect(status().isOk());
-              // .andExpect(content().json(outputJson));
-
     }
+
     @Test
     public void shouldUpdateReturn204StatusCode() throws Exception {
         Invoice invoice = new Invoice();
@@ -151,29 +124,12 @@ public class InvoiceControllerTest {
     }
     @Test
     public void shouldReturnByCustomerName() throws Exception {
-        Invoice invoice = new Invoice();
-        invoice.setName("Jake");
-        invoice.setStreet("Wood Pine Drive");
-        invoice.setCity("Newport News");
-        invoice.setState("VA");
-        invoice.setZipcode("23064");
-        invoice.setItemType("game");
-        invoice.setItemId(2784);
-        invoice.setUnitPrice(new BigDecimal("14.99"));
-        invoice.setQuantity(1);
-        invoice.setSubtotal(new BigDecimal("14.99"));
-        invoice.setTax(new BigDecimal("0.06"));
-        invoice.setProcessingFee(new BigDecimal("1.49"));
-        invoice.setTotal(new BigDecimal("17.38"));
-        String outputJson = mapper.writeValueAsString(invoice);
+
         mockMvc.perform(
                 get("/invoice/name/Jake"))
                 .andDo(print())
                 .andExpect(status().isOk());
-               // .andExpect(content().json(outputJson));
 
     }
-
-
 
 }
