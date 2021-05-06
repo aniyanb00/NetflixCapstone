@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class ProcessingFeeJdbcTemplateTest {
+public class ProcessingFeeJdbcTemplateImplTest {
 
     @Autowired
     ProcessingFeeDao processingFeeDao;

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ConsoleDaoImplTest {
+public class ConsoleDaoJdbcTemplateImplTest {
 
     @Autowired
     public ConsoleDao consoleDao;

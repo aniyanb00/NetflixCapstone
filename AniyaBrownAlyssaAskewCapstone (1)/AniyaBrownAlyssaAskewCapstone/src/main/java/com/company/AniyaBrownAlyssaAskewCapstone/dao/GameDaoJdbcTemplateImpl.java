@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class GameDaoImpl implements GameDao{
+public class GameDaoJdbcTemplateImpl implements GameDao{
 
     //prepared statements
     private static final String INSERT_GAME_SQL =
@@ -25,7 +25,7 @@ public class GameDaoImpl implements GameDao{
             "select * from game ";
 
     private static final String UPDATE_GAME_SQL =
-            "update game set title = ?, esrb_rating = ?, description = ?, price = ?, studio = ?, quantity = ?";
+            "update game set title = ?, esrb_rating = ?, description = ?, price = ?, studio = ?, quantity = ? where game_id = ?";
 
     private static final String DELETE_GAME_SQL =
             "delete from game where game_id = ?";
@@ -45,7 +45,7 @@ public class GameDaoImpl implements GameDao{
 
     //constructor
     @Autowired
-    public GameDaoImpl(JdbcTemplate jdbcTemplate){
+    public GameDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
     }
 
@@ -89,7 +89,9 @@ public class GameDaoImpl implements GameDao{
                 game.getDescription(),
                 game.getPrice(),
                 game.getStudio(),
-                game.getQuantity());
+                game.getQuantity(),
+                game.getId()
+        );
 
     }
 

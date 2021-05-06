@@ -57,10 +57,11 @@ public class InvoiceService {
 
         return invoice;
     }
+
         public boolean isCorrectStateCode(InvoiceViewModel viewModel){
             SalesTaxRate state = salesTaxRateDao.getSalesTaxRate2(viewModel.getState());
 
-            if(state == null){
+            if(!viewModel.getState().equalsIgnoreCase(state.getState())){
                 throw new IllegalArgumentException("Incorrect StateCode");
             }
 

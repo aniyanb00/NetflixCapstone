@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class ConsoleDaoImpl implements ConsoleDao {
+public class ConsoleDaoJdbcTemplateImpl implements ConsoleDao {
 
     //prepared statements
     private static final String INSERT_CONSOLE_SQL =
@@ -25,7 +25,7 @@ public class ConsoleDaoImpl implements ConsoleDao {
             "select * from console ";
 
     private static final String UPDATE_CONSOLE_SQL =
-            "update console set  model =?, manufacturer = ?, memory_amount = ? , processor = ?, price = ? , quantity = ?";
+            "update console set  model =?, manufacturer = ?, memory_amount = ? , processor = ?, price = ? , quantity = ? where console_id = ?";
 
     private static final String DELETE_CONSOLE_SQL =
             "delete from console where console_id = ?";
@@ -38,7 +38,7 @@ public class ConsoleDaoImpl implements ConsoleDao {
 
     //constructor
     @Autowired
-    public ConsoleDaoImpl(JdbcTemplate jdbcTemplate){
+    public ConsoleDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
     }
 
@@ -83,8 +83,9 @@ public class ConsoleDaoImpl implements ConsoleDao {
                 console.getMemory_amount(),
                 console.getProcessor(),
                 console.getPrice(),
-                console.getQuantity()
-                );
+                console.getQuantity(),
+                console.getId()
+        );
     }
 
     @Override

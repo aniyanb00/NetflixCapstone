@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class SalesTaxRateDaoJdbcTemplateTest {
+public class SalesTaxRateDaoJdbcTemplateImplTest {
 
     @Autowired
     protected SalesTaxRateDao salesTaxRateDao;

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class GameDaoImplTest {
+public class GameDaoJdbcTemplateImplTest {
 
     @Autowired
     public GameDao gameDao;

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class InvoiceDaoJdbcTemplatesTest {
+public class InvoiceDaoJdbcTemplateImplTest {
 
     @Autowired
     protected InvoiceDao invoiceDao;

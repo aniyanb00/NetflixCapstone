@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Repository
-public class ProcessingFeeJdbcTemplate implements ProcessingFeeDao{
+public class ProcessingFeeJdbcTemplateImpl implements ProcessingFeeDao{
     //prepared statements
     private static final String SELECT_PROCESS_FEE_SQL =
             "select * from processing_fee where product_type = ?";
@@ -22,7 +22,7 @@ public class ProcessingFeeJdbcTemplate implements ProcessingFeeDao{
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public ProcessingFeeJdbcTemplate (JdbcTemplate jdbcTemplate){
+    public ProcessingFeeJdbcTemplateImpl(JdbcTemplate jdbcTemplate){
 
         this.jdbcTemplate = jdbcTemplate;
     }

@@ -75,7 +75,7 @@ public class TShirtController {
     }
 
     //get by Color
-    @RequestMapping(value="/TShirt/{color}", method = RequestMethod.GET)
+    @RequestMapping(value="/TShirt/color/{color}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<TShirt> getConsoleByColor(@PathVariable String color){
         try{
@@ -88,7 +88,7 @@ public class TShirtController {
     }
 
     //get by size
-    @RequestMapping(value="/TShirt{size}", method = RequestMethod.GET)
+    @RequestMapping(value="/TShirt/size/{size}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<TShirt> getConsoleBySize(@PathVariable String size){
         try{

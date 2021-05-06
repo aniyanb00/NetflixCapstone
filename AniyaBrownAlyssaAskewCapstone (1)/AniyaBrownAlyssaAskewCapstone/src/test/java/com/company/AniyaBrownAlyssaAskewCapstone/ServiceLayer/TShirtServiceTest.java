@@ -1,7 +1,7 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.ServiceLayer;
 
 import com.company.AniyaBrownAlyssaAskewCapstone.dao.TShirtDao;
-import com.company.AniyaBrownAlyssaAskewCapstone.dao.TShirtDaoImpl;
+import com.company.AniyaBrownAlyssaAskewCapstone.dao.TShirtDaoJdbcTemplateImpl;
 import com.company.AniyaBrownAlyssaAskewCapstone.model.TShirt;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,7 +86,7 @@ public class TShirtServiceTest {
     }
     //helper methods
     private void setUpTShirtMock(){
-        tShirtDao = mock(TShirtDaoImpl.class);
+        tShirtDao = mock(TShirtDaoJdbcTemplateImpl.class);
 
         TShirt shirt = new TShirt();
         shirt.setId(3);

@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 @RestController
 public class ConsoleController {
+
     @Autowired
     private ConsoleService consoleService;
 
@@ -29,8 +30,11 @@ public class ConsoleController {
     @RequestMapping(value="/console/{id}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public Console getConsole(@PathVariable int id){
+        Console console  = null;
+
         try{
-            return consoleService.getConsole(id);
+            console = consoleService.getConsole(id);
+            return console;
         }catch(IllegalArgumentException e){
             throw new IllegalArgumentException("ID not found");
         }
@@ -48,6 +52,7 @@ public class ConsoleController {
        return allConsole;
 
     }
+
     //update console
     @RequestMapping(value = "/console", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
@@ -68,7 +73,7 @@ public class ConsoleController {
     }
 
     //get by Manufacturer
-    @RequestMapping(value="/console/{manufacturer}", method = RequestMethod.GET)
+    @RequestMapping(value="/console/manufacturer/{manufacturer}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public List<Console> getConsoleByManufacturer(@PathVariable String manufacturer){
         try{

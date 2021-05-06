@@ -35,6 +35,40 @@ public class InvoiceServiceTest {
 
         invoiceService= new InvoiceService(consoleDao,gameDao,tShirtDao,salesTaxRateDao,processingFeeDao,invoiceDao);
     }
+    @Test
+    public void shouldCheckUpdateQuantity() {
+        InvoiceViewModel viewModel = new InvoiceViewModel();
+        viewModel.setName("Jake");
+        viewModel.setStreet("Wood Pine Drive");
+        viewModel.setCity("Newport News");
+        viewModel.setState("VA");
+        viewModel.setZip("23064");
+        viewModel.setItemType("games");
+        viewModel.setItemID(1);
+        viewModel.setQuantity(2);
+
+        boolean updateQuantity = invoiceService.checkUpdateQuantity(viewModel);
+
+        assertEquals(true, updateQuantity);
+    }
+
+    @Test
+    public void shouldCheckValidStateCode(){
+        InvoiceViewModel viewModel = new InvoiceViewModel();
+        viewModel.setName("Jake");
+        viewModel.setStreet("Wood Pine Drive");
+        viewModel.setCity("Newport News");
+        viewModel.setState("VA");
+        viewModel.setZip("23064");
+        viewModel.setItemType("games");
+        viewModel.setItemID(1);
+        viewModel.setQuantity(2);
+
+        boolean validState = invoiceService.isCorrectStateCode(viewModel);
+
+        assertEquals(true, validState);
+    }
+
 
     @Test
     public void saveInvoicefromViewModel(){
@@ -50,6 +84,8 @@ public class InvoiceServiceTest {
         viewModel.setItemID(1);
         viewModel.setQuantity(2);
 
+        //save Invoice is testing all the get methods that included
+        //in the service layer(processing fee,subtotal,state tax,unit price,total)
         Invoice invoice = invoiceService.saveInvoice(viewModel);
 
 
@@ -123,7 +159,7 @@ public class InvoiceServiceTest {
 
     //helper methods
     private void setUpGameDao(){
-        gameDao = mock(GameDaoImpl.class);
+        gameDao = mock(GameDaoJdbcTemplateImpl.class);
 
         Game game = new Game();
         game.setId(1);
@@ -146,10 +182,11 @@ public class InvoiceServiceTest {
         gList.add(game);
 
         doReturn(game).when(gameDao).getGame(1);
+
     }
 
     private void setUpConsoleDao(){
-        consoleDao = mock(ConsoleDaoImpl.class);
+        consoleDao = mock(ConsoleDaoJdbcTemplateImpl.class);
 
         Console console =new Console();
         console.setId(23456);
@@ -175,7 +212,7 @@ public class InvoiceServiceTest {
     }
 
     private void setupTshirtDao(){
-        tShirtDao = mock(TShirtDaoImpl.class);
+        tShirtDao = mock(TShirtDaoJdbcTemplateImpl.class);
 
         TShirt shirt = new TShirt();
         shirt.setId(23456);
@@ -199,7 +236,7 @@ public class InvoiceServiceTest {
     }
 
     private void setUpInvoiceDao(){
-        invoiceDao = mock(InvoiceDaoJdbcTemplates.class);
+        invoiceDao = mock(InvoiceDaoJdbcTemplateImpl.class);
 
         //game invoice mock
         Invoice invoice = new Invoice();
@@ -317,7 +354,7 @@ public class InvoiceServiceTest {
 
     private void setUpProcessingDao(){
 
-        processingFeeDao = mock(ProcessingFeeJdbcTemplate.class);
+        processingFeeDao = mock(ProcessingFeeJdbcTemplateImpl.class);
 
         ProcessingFee gameProcessingFee = new ProcessingFee();
         gameProcessingFee.setProductType("games");
@@ -337,7 +374,7 @@ public class InvoiceServiceTest {
     }
 
     private void setUpSalesTaxRateDao(){
-        salesTaxRateDao = mock(SalesTaxRateDaoJdbcTemplate.class);
+        salesTaxRateDao = mock(SalesTaxRateDaoJdbcTemplateImpl.class);
 
         SalesTaxRate taxRate = new SalesTaxRate();
         taxRate.setState("VA");

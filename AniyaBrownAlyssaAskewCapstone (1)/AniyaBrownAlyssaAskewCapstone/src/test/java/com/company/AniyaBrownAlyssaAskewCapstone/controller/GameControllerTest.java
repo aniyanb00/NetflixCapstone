@@ -103,11 +103,9 @@ public class GameControllerTest {
 
             String outputJson = mapper.writeValueAsString(game);
             mockMvc.perform(
-                    get("/games/2"))
+                    get("/game/2"))
                     .andDo(print())
                     .andExpect(status().isOk());
-                    //.andExpect(content().json(outputJson));
-
         }
         @Test
         public void shouldUpdateAndReturn204StatusCode() throws Exception {
@@ -138,54 +136,27 @@ public class GameControllerTest {
         }
     @Test
     public void shouldReturnByStudioAndReturn204StatusCode( ) throws Exception {
-        Game game = new Game();
-        game.setTitle("Call of Duty : WarZone");
-        game.setEsrb_rating("General Audience");
-        game.setDescription("shooting game");
-        game.setPrice(new BigDecimal("10.00"));
-        game.setStudio("Activision");
-        game.setQuantity(3);
-        String outputJson = mapper.writeValueAsString(game);
         mockMvc.perform(
                 get("/game/studio/Activision"))
                 .andDo(print())
                 .andExpect(status().isOk());
-               // .andExpect(content().json(outputJson));
-
-
     }
     @Test
     public void shouldReturnByESRBAndReturn204StatusCode() throws Exception{
-        Game game = new Game();
-        game.setTitle("Just Dance");
-        game.setEsrb_rating("Everyone");
-        game.setDescription("dancing game");
-        game.setPrice(new BigDecimal("13.00"));
-        game.setStudio("Activision");
-        game.setQuantity(3);
-        String outputJson = mapper.writeValueAsString(game);
+
         mockMvc.perform(
                 get("/game/esrb/Everyone"))
                 .andDo(print())
                 .andExpect(status().isOk());
-                //.andExpect(content().json(outputJson));
 
     }
     @Test
     public void shouldReturnByTitleAndReturn204StatusCode() throws Exception {
-        Game game = new Game();
-        game.setTitle("Animal Farm");
-        game.setEsrb_rating("Everyone");
-        game.setDescription("animal life game");
-        game.setPrice(new BigDecimal("6.00"));
-        game.setStudio("Nintendo");
-        game.setQuantity(2);
-        String outputJson = mapper.writeValueAsString(game);
+
         mockMvc.perform(
-                get("/game/title/Animal Farm"))
+                get("/game/title/AnimalFarm"))
                 .andDo(print())
                 .andExpect(status().isOk());
-               // .andExpect(content().json(outputJson));
 
     }
 

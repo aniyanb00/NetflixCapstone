@@ -1,7 +1,7 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.ServiceLayer;
 
 import com.company.AniyaBrownAlyssaAskewCapstone.dao.GameDao;
-import com.company.AniyaBrownAlyssaAskewCapstone.dao.GameDaoImpl;
+import com.company.AniyaBrownAlyssaAskewCapstone.dao.GameDaoJdbcTemplateImpl;
 import com.company.AniyaBrownAlyssaAskewCapstone.model.Game;
 import org.junit.Before;
 import org.junit.Test;
@@ -104,7 +104,7 @@ public class GameServiceTest {
 
     //helper methods
     private void setUpGameDaoMock(){
-        gameDao = mock(GameDaoImpl.class);
+        gameDao = mock(GameDaoJdbcTemplateImpl.class);
 
         Game game = new Game();
         game.setId(1);

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class InvoiceDaoJdbcTemplates implements InvoiceDao {
+public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
     //prepared statements
     private static final String INSERT_INVOICE_SQL =
@@ -24,13 +24,13 @@ public class InvoiceDaoJdbcTemplates implements InvoiceDao {
     private static final String DELETE_INVOICE_SQL =
             "delete from invoice where invoice_id = ?";
     private static final String UPDATE_INVOICE_SQL =
-            "update invoice set name=?,street=?,city=?,state=?,zipcode=?,item_type=?,item_id=?,unit_price=?,quantity=?,subtotal=?,tax=?,processing_fee=?,total=?";
+            "update invoice set name=?,street=?,city=?,state=?,zipcode=?,item_type=?,item_id=?,unit_price=?,quantity=?,subtotal=?,tax=?,processing_fee=?,total=? where invoice_id =?";
     private static final String SELECT_INVOICES_BY_CUSTOMER_NAME_SQL =
             "select * from invoice where name = ? ";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public InvoiceDaoJdbcTemplates(JdbcTemplate jdbcTemplate) {
+    public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -91,7 +91,9 @@ public class InvoiceDaoJdbcTemplates implements InvoiceDao {
                 invoice.getSubtotal(),
                 invoice.getTax(),
                 invoice.getProcessingFee(),
-                invoice.getTotal());
+                invoice.getTotal(),
+                invoice.getInvoiceId()
+        );
 
  }
     @Override

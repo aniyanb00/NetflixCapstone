@@ -32,8 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ConsoleController.class)
-
-
 public class ConsoleControllerTest {
 
     @Autowired
@@ -65,6 +63,7 @@ public class ConsoleControllerTest {
                 .andExpect(status().isOk());
 
     }
+
     @Test
     public void shouldReturnNewConsoleOnPostRequest() throws Exception {
         Console console = new Console();
@@ -100,21 +99,21 @@ public class ConsoleControllerTest {
 
         Console console = new Console();
 
+        console.setId(2);
         console.setModel("Playstation 5");
         console.setManufacturer("Sony");
         console.setMemory_amount("500GB");
         console.setProcessor("AMD Zen 2");
         console.setPrice(new BigDecimal("300.00"));
         console.setQuantity(1);
-        console.setId(2);
 
+        console = consoleService.saveConsole(console);
 
         String outputJson = mapper.writeValueAsString(console);
-        mockMvc.perform(
-                get("/consoles/2"))
+
+        mockMvc.perform(get("/console/2"))
                 .andDo(print())
                 .andExpect(status().isOk());
-               // .andExpect(content().json(outputJson));
 
     }
     @Test
@@ -132,7 +131,6 @@ public class ConsoleControllerTest {
                 put("/console")
                  .content(inputJson)
                  .contentType(MediaType.APPLICATION_JSON)
-
         )
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -145,6 +143,7 @@ public class ConsoleControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
+
     @Test
     public void shouldReturnByManufacturer() throws Exception {
         Console console = new Console();
@@ -155,12 +154,13 @@ public class ConsoleControllerTest {
         console.setPrice(new BigDecimal("300.00"));
         console.setQuantity(1);
         console.setId(3);
+
         String outputJson = mapper.writeValueAsString(console);
         mockMvc.perform(
                 get("/console/manufacturer/Microsoft"))
                 .andDo(print())
                 .andExpect(status().isOk());
-               // .andExpect(content().json(outputJson));
+
 
     }
 

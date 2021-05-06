@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @Repository
-public class SalesTaxRateDaoJdbcTemplate implements SalesTaxRateDao{
+public class SalesTaxRateDaoJdbcTemplateImpl implements SalesTaxRateDao{
     //prepared statements
 
     private static final String SELECT_SALES_TAX_RATE_SQL =
@@ -25,7 +25,7 @@ public class SalesTaxRateDaoJdbcTemplate implements SalesTaxRateDao{
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public SalesTaxRateDaoJdbcTemplate (JdbcTemplate jdbcTemplate){
+    public SalesTaxRateDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate){
 
         this.jdbcTemplate = jdbcTemplate;
     }

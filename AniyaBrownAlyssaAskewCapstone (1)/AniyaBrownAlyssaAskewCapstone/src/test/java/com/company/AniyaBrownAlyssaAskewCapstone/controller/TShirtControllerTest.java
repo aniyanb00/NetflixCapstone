@@ -32,7 +32,6 @@ public class TShirtControllerTest {
         @Autowired
         private MockMvc mockMvc;
 
-
         @Autowired
         private ObjectMapper mapper = new ObjectMapper();
 
@@ -84,10 +83,9 @@ public class TShirtControllerTest {
                     .andDo(print())
                     .andExpect(status().isCreated());
         }
+
         @Test
         public void shouldReturnTShirtsById() throws Exception {
-
-
             TShirt shirt = new TShirt();
             shirt.setSize("Large");
             shirt.setColor("white");
@@ -96,12 +94,11 @@ public class TShirtControllerTest {
             shirt.setQuantity(5);
             shirt.setId(2);
 
-            String outputJson = mapper.writeValueAsString(shirt);
             mockMvc.perform(
                     get("/TShirt/2"))
                     .andDo(print())
                     .andExpect(status().isOk());
-                    //.andExpect(content().json(outputJson));
+
 
         }
         @Test
@@ -138,13 +135,11 @@ public class TShirtControllerTest {
             shirt.setDescription("Marvel avengers long sleeve shirt ");
             shirt.setPrice(new BigDecimal("25.00"));
             shirt.setQuantity(2);
-            String outputJson = mapper.writeValueAsString(shirt);
+
             mockMvc.perform(
                     get("/TShirt/color/red"))
                     .andDo(print())
                     .andExpect(status().isOk());
-                    //.andExpect(content().json(outputJson));
-
         }
         @Test
         public void shouldReturnBySize() throws Exception {
@@ -154,12 +149,11 @@ public class TShirtControllerTest {
         shirt.setDescription("Summer short sleeve shirt with flower print");
         shirt.setPrice(new BigDecimal("10.00"));
         shirt.setQuantity(2);
-        String outputJson = mapper.writeValueAsString(shirt);
+
         mockMvc.perform(
                 get("/TShirt/size/X-Large"))
                 .andDo(print())
                 .andExpect(status().isOk());
-              //  .andExpect(content().json(outputJson));
 
     }
     }

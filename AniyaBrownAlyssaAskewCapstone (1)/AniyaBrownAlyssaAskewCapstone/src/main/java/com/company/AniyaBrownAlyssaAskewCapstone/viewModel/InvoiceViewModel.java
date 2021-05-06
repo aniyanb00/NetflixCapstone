@@ -1,17 +1,43 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.viewModel;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class InvoiceViewModel {
 
     private int id;
+    @NotEmpty(message ="Name required")
+    @Size(max = 80)
     private String name;
+
+    @NotEmpty(message ="Street required")
+    @Size(max =30)
     private String street;
+
+    @NotEmpty(message ="City required")
+    @Size(max =30)
     private String city;
+
+    @Size(max = 2, min = 2, message = "2-Letter State Code is required only.")
+    @NotEmpty
     private String state;
+
+    @NotEmpty(message = "Zip Code required")
+    @Size(max =5 , min = 5, message = "Zip Code are 5 digits ")
     private String Zip;
+
+    @NotEmpty(message = "Item type required")
+    @Size(max =20)
     private String itemType;
+
+    @NotEmpty(message ="Item ID required")
     private int itemID;
+
+    @NotEmpty(message ="Quantity required")
+    @Size(max =11)
     private int quantity;
 
     public int getId() {

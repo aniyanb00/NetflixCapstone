@@ -1,15 +1,12 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.controller;
 
 import com.company.AniyaBrownAlyssaAskewCapstone.ServiceLayer.GameService;
-import com.company.AniyaBrownAlyssaAskewCapstone.dao.GameDao;
 import com.company.AniyaBrownAlyssaAskewCapstone.model.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,19 +21,22 @@ public class GameController {
     @RequestMapping(value = "/game", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public Game createGame(@RequestBody @Valid Game game) {
+        Game game1 = new Game();
         try{
-            return gameService.saveGame(game);
+            game = gameService.saveGame(game);
+            return game;
         }catch(IllegalArgumentException e){
             throw new IllegalArgumentException("Invalid Body");
         }
-
     }
-    //Read (get  game)
 
+    //Read (get  game)
     @RequestMapping(value="/game/{id}", method = RequestMethod.GET)
     @ResponseStatus(value =HttpStatus.OK)
     public Game getGame(@PathVariable int id){
-        return gameService.getGame(id);
+        Game game1 = new Game();
+        game1= gameService.getGame(id);
+        return game1;
     }
 
     //get all game
@@ -50,6 +50,7 @@ public class GameController {
         return allGame;
 
     }
+
     //update game
     @RequestMapping(value = "/game", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
@@ -57,10 +58,10 @@ public class GameController {
          gameService.updateGame(game);
 
     }
-//delete a game
-@RequestMapping(value = "/game/{id}", method = RequestMethod.DELETE)
-@ResponseStatus(value = HttpStatus.NO_CONTENT)
-public void deleteGame(@PathVariable int id) {
+    //delete a game
+    @RequestMapping(value = "/game/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteGame(@PathVariable int id) {
         try{
             gameService.deleteGame(id);
         }catch(IllegalArgumentException e){
@@ -69,10 +70,10 @@ public void deleteGame(@PathVariable int id) {
 
 }
 
-//get by studio
-@RequestMapping(value="/game/{studio}", method = RequestMethod.GET)
-@ResponseStatus(value =HttpStatus.OK)
-public List<Game> getGameByStudio(@PathVariable String studio){
+    //get by studio
+    @RequestMapping(value="/game/studio/{studio}", method = RequestMethod.GET)
+    @ResponseStatus(value =HttpStatus.OK)
+    public List<Game> getGameByStudio(@PathVariable String studio){
         try{
             return gameService.getGamebyStudio(studio);
         }catch(IllegalArgumentException e){
@@ -81,10 +82,10 @@ public List<Game> getGameByStudio(@PathVariable String studio){
 
 }
 
-//get by ESRB
-@RequestMapping(value="/game/{esrb}", method = RequestMethod.GET)
-@ResponseStatus(value =HttpStatus.OK)
-public List<Game> getGameByESRB(@PathVariable String esrb){
+    //get by ESRB
+    @RequestMapping(value="/game/esrb/{esrb}", method = RequestMethod.GET)
+    @ResponseStatus(value =HttpStatus.OK)
+    public List<Game> getGameByESRB(@PathVariable String esrb){
         try{
             return gameService.getGamesbyESRB(esrb);
         }catch(IllegalArgumentException e){
@@ -92,10 +93,10 @@ public List<Game> getGameByESRB(@PathVariable String esrb){
         }
 }
 
-//get by Title
-@RequestMapping(value="/game/{method}", method = RequestMethod.GET)
-@ResponseStatus(value =HttpStatus.OK)
-public List<Game> getGameByTitle(@PathVariable String title){
+    //get by Title
+    @RequestMapping(value="/game/title/{title}", method = RequestMethod.GET)
+    @ResponseStatus(value =HttpStatus.OK)
+    public List<Game> getGameByTitle(@PathVariable String title){
         try{
             return gameService.getGamesbyTitle(title);
         }catch(IllegalArgumentException e){

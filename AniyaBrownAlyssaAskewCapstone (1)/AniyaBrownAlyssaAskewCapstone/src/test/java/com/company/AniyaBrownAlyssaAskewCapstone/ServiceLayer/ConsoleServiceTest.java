@@ -1,7 +1,7 @@
 package com.company.AniyaBrownAlyssaAskewCapstone.ServiceLayer;
 
 import com.company.AniyaBrownAlyssaAskewCapstone.dao.ConsoleDao;
-import com.company.AniyaBrownAlyssaAskewCapstone.dao.ConsoleDaoImpl;
+import com.company.AniyaBrownAlyssaAskewCapstone.dao.ConsoleDaoJdbcTemplateImpl;
 import com.company.AniyaBrownAlyssaAskewCapstone.model.Console;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,7 +71,7 @@ public class ConsoleServiceTest {
     //helper methods
     private void setUpConsoleDaoMock(){
 
-        consoleDao = mock(ConsoleDaoImpl.class);
+        consoleDao = mock(ConsoleDaoJdbcTemplateImpl.class);
 
         Console console =new Console();
         console.setId(1);

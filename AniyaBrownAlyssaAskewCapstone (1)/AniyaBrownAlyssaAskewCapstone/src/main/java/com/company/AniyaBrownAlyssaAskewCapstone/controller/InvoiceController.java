@@ -16,10 +16,16 @@ public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
 
+    public InvoiceController(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
+    }
+
     //create Invoice ->post
     @RequestMapping(value = "/invoice", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Invoice createInvoice(@RequestBody @Valid InvoiceViewModel invoice) {
+    public Invoice createInvoice(@RequestBody InvoiceViewModel invoice) {
+
+
         if(invoiceService.checkUpdateQuantity(invoice)
                 && invoice.getQuantity() > 0
                 && invoiceService.isCorrectStateCode(invoice)){
@@ -28,6 +34,7 @@ public class InvoiceController {
         else{
             throw new IllegalArgumentException("Invalid Response");
         }
+
 
     }
 

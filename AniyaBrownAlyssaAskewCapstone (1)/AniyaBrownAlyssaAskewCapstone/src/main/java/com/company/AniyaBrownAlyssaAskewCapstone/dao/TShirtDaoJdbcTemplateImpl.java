@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class TShirtDaoImpl implements TShirtDao {
+public class TShirtDaoJdbcTemplateImpl implements TShirtDao {
 
     //prepared SQL statements
     private static final String INSERT_SHIRT_SQL =
@@ -25,7 +25,7 @@ public class TShirtDaoImpl implements TShirtDao {
             "select * from t_shirt ";
 
     private static final String UPDATE_SHIRT_SQL =
-            "update t_shirt set size = ?, color = ?, description = ?, price = ?, quantity = ?";
+            "update t_shirt set size = ?, color = ?, description = ?, price = ?, quantity = ? where t_shirt_id = ? ";
 
     private static final String DELETE_SHIRT_SQL =
             "delete from t_shirt where t_shirt_id = ?";
@@ -42,7 +42,7 @@ public class TShirtDaoImpl implements TShirtDao {
 
     //constructor
     @Autowired
-    public TShirtDaoImpl(JdbcTemplate jdbcTemplate){
+    public TShirtDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
     }
 
@@ -91,7 +91,9 @@ public class TShirtDaoImpl implements TShirtDao {
                 tShirt.getColor(),
                 tShirt.getDescription(),
                 tShirt.getPrice(),
-                tShirt.getQuantity());
+                tShirt.getQuantity(),
+                tShirt.getId()
+        );
     }
 
     @Override

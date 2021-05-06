@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class TShirtDaoImplTest {
+public class TShirtDaoJdbcTemplateImplTest {
 
     @Autowired
     public TShirtDao shirtDao;
